@@ -82,6 +82,43 @@ docker-compose down
 
 to tear down all the services. 
 
+## Running the Program
+
+1. Start the services:
+   ```bash
+   docker-compose up -d
+   ```
+
+2. Initialize the project:
+   ```bash
+   make init-all
+   ```
+   This will:
+   - Download Go dependencies
+   - Create Kafka topic with 3 partitions
+
+3. Start the consumer (in one terminal):
+   ```bash
+   make run-consumer
+   ```
+   The consumer will wait for messages and index them in OpenSearch
+
+4. Run the producer (in another terminal):
+   ```bash
+   make run-producer
+   ```
+   This will read events from `stream.jsonl` and send them to Kafka
+
+5. Monitor the progress:
+   - Kafka UI: http://localhost:8080
+   - OpenSearch: http://localhost:9200
+   - OpenSearch Dashboards: http://localhost:5601
+
+6. When done, stop the services:
+   ```bash
+   docker-compose down
+   ```
+
 ## Resources
 
 * `stream.jsonl` contains cdc events that need to be ingested
