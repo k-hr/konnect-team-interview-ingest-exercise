@@ -1,0 +1,30 @@
+# Kafka Configuration
+kafka:
+  brokers:
+    - "localhost:9092"
+  topic: "cdc-events"
+  group_id: "cdc-consumer-group"
+  client_id: "cdc-client"
+  topic_config:
+    partitions: 3
+    replication_factor: 1
+
+# OpenSearch Configuration
+opensearch:
+  hosts:
+    - "http://localhost:9200"
+  index_prefix: "cdc"
+
+# Producer Configuration
+producer:
+  input_file: "stream.jsonl"
+
+# Consumer Configuration
+consumer:
+  batch_size: 100
+  commit_interval: "1s"
+
+# Logging Configuration
+log:
+  level: "info"
+  format: "json"

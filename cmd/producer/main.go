@@ -35,7 +35,7 @@ func main() {
 	defer producer.Close()
 
 	// Open input file
-	file, err := os.Open(cfg.Input.FilePath)
+	file, err := os.Open(cfg.Producer.InputFile)
 	if err != nil {
 		logger.Fatal("Failed to open input file", zap.Error(err))
 	}

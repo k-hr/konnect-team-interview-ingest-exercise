@@ -38,7 +38,7 @@ func main() {
 	kafkaConfig.Consumer.Group.Rebalance.Strategy = sarama.BalanceStrategyRoundRobin
 	kafkaConfig.Consumer.Offsets.Initial = sarama.OffsetOldest
 
-	consumer, err := sarama.NewConsumerGroup(cfg.Kafka.Brokers, "cdc-consumer", kafkaConfig)
+	consumer, err := sarama.NewConsumerGroup(cfg.Kafka.Brokers, cfg.Kafka.GroupID, kafkaConfig)
 	if err != nil {
 		logger.Fatal("Failed to create consumer group", zap.Error(err))
 	}
@@ -119,7 +119,7 @@ func (h *ConsumerGroupHandler) processEvent(event models.CDCEvent) error {
 		return nil
 	}
 	entityType := parts[len(parts)-2] // e.g., "service", "node", "upstream"
-	
+
 	// Create index name based on entity type
 	indexName := h.indexPrefix + "-" + entityType
 	h.logger.Info("Processing event",

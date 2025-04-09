@@ -4,14 +4,14 @@ package models
 type CDCEvent struct {
 	Before interface{}     `json:"before"`
 	After  CDCAfterPayload `json:"after"`
-	Op     string         `json:"op"`
-	TsMs   int64         `json:"ts_ms"`
+	Op     string          `json:"op"`
+	TsMs   int64           `json:"ts_ms"`
 }
 
 // CDCAfterPayload represents the structure of the After field
 type CDCAfterPayload struct {
-	Key   string     `json:"key"`
-	Value ValueType  `json:"value"`
+	Key   string    `json:"key"`
+	Value ValueType `json:"value"`
 }
 
 // ValueType represents the value structure
@@ -51,7 +51,7 @@ type Node struct {
 	ConfigHash      string                 `json:"config_hash"`
 	ProcessConf     map[string]interface{} `json:"process_conf"`
 	ConnectionState map[string]interface{} `json:"connection_state"`
-	DataPlaneCertID string                `json:"data_plane_cert_id"`
+	DataPlaneCertID string                 `json:"data_plane_cert_id"`
 }
 
 // Upstream represents a Kong upstream entity
@@ -61,10 +61,10 @@ type Upstream struct {
 	Slots            int                    `json:"slots"`
 	HashOn           string                 `json:"hash_on"`
 	Algorithm        string                 `json:"algorithm"`
-	CreatedAt        int64                 `json:"created_at"`
-	UpdatedAt        int64                 `json:"updated_at"`
+	CreatedAt        int64                  `json:"created_at"`
+	UpdatedAt        int64                  `json:"updated_at"`
 	Healthchecks     map[string]interface{} `json:"healthchecks"`
 	UseSrvName       bool                   `json:"use_srv_name"`
 	HashFallback     string                 `json:"hash_fallback"`
-	HashOnCookiePath string                `json:"hash_on_cookie_path"`
+	HashOnCookiePath string                 `json:"hash_on_cookie_path"`
 }

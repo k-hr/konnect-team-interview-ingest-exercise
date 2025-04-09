@@ -1,47 +1,34 @@
 package config
 
-import (
-	"github.com/spf13/viper"
-)
-
 // Config holds all configuration for the application
 type Config struct {
-	Kafka      KafkaConfig      `mapstructure:"kafka"`
-	OpenSearch OpenSearchConfig `mapstructure:"opensearch"`
-	Input      InputConfig      `mapstructure:"input"`
-}
+	Kafka struct {
+		Brokers  []string `mapstructure:"brokers"`
+		Topic    string   `mapstructure:"topic"`
+		GroupID  string   `mapstructure:"group_id"`
+		ClientID string   `mapstructure:"client_id"`
+		TopicConfig struct {
+			Partitions        int `mapstructure:"partitions"`
+			ReplicationFactor int `mapstructure:"replication_factor"`
+		} `mapstructure:"topic_config"`
+	} `mapstructure:"kafka"`
 
-// KafkaConfig holds Kafka-specific configuration
-type KafkaConfig struct {
-	Brokers []string `mapstructure:"brokers"`
-	Topic   string   `mapstructure:"topic"`
-}
+	OpenSearch struct {
+		Hosts      []string `mapstructure:"hosts"`
+		IndexPrefix string   `mapstructure:"index_prefix"`
+	} `mapstructure:"opensearch"`
 
-// OpenSearchConfig holds OpenSearch-specific configuration
-type OpenSearchConfig struct {
-	Hosts       []string `mapstructure:"hosts"`
-	IndexPrefix string   `mapstructure:"index_prefix"`
-}
+	Producer struct {
+		InputFile string `mapstructure:"input_file"`
+	} `mapstructure:"producer"`
 
-// InputConfig holds input file configuration
-type InputConfig struct {
-	FilePath string `mapstructure:"file_path"`
-}
+	Consumer struct {
+		BatchSize      int    `mapstructure:"batch_size"`
+		CommitInterval string `mapstructure:"commit_interval"`
+	} `mapstructure:"consumer"`
 
-// LoadConfig loads the configuration from environment variables and config file
-func LoadConfig() (*Config, error) {
-	viper.SetDefault("kafka.brokers", []string{"localhost:9092"})
-	viper.SetDefault("kafka.topic", "cdc-events")
-	viper.SetDefault("opensearch.hosts", []string{"http://localhost:9200"})
-	viper.SetDefault("opensearch.index_prefix", "konnect")
-	viper.SetDefault("input.file_path", "stream.jsonl")
-
-	viper.AutomaticEnv()
-	
-	var config Config
-	if err := viper.Unmarshal(&config); err != nil {
-		return nil, err
-	}
-
-	return &config, nil
+	Log struct {
+		Level  string `mapstructure:"level"`
+		Format string `mapstructure:"format"`
+	} `mapstructure:"log"`
 }
