@@ -23,3 +23,9 @@ vendor/
 # OS specific files
 .DS_Store
 .env
+
+# Application configuration
+application.yml
+
+# Build output
+bin/
