@@ -1,4 +1,10 @@
-.PHONY: build test clean run-producer run-consumer init config
+.PHONY: all build test clean run-producer run-consumer init config setup-kafka init-all
+
+# Default target
+all: config build
+
+# Full initialization with Kafka setup
+init-all: init setup-kafka
 
 # Configuration paths
 CONFIG_SAMPLE := application.yml.sample
@@ -39,6 +45,13 @@ run-consumer: config
 deps:
 	go mod download
 	go mod tidy
+
+# Kafka setup
+setup-kafka: config
+	@command -v yq >/dev/null 2>&1 || { echo "yq is required but not installed. Install with: brew install yq"; exit 1; }
+	@docker ps | grep -q konnect-team-interview-ingest-exercise-kafka-1 || { echo "Kafka container not running. Please start with: docker-compose up -d"; exit 1; }
+	@chmod +x scripts/setup_kafka.sh
+	./scripts/setup_kafka.sh
 
 # Linting
 lint:
