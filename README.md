@@ -102,27 +102,34 @@ to tear down all the services.
    make init-all
    ```
    This will:
+   - Check required dependencies (yq)
    - Download Go dependencies
    - Create Kafka topic with 3 partitions
 
-3. Start the consumer (in one terminal):
+3. Build the binaries:
+   ```bash
+   make build
+   ```
+   This will compile the producer and consumer programs
+
+4. Start the consumer (in one terminal):
    ```bash
    make run-consumer
    ```
    The consumer will wait for messages and index them in OpenSearch
 
-4. Run the producer (in another terminal):
+5. Run the producer (in another terminal):
    ```bash
    make run-producer
    ```
    This will read events from `stream.jsonl` and send them to Kafka
 
-5. Monitor the progress:
+6. Monitor the progress:
    - Kafka UI: http://localhost:8080
    - OpenSearch: http://localhost:9200
    - OpenSearch Dashboards: http://localhost:5601
 
-6. When done, stop the services:
+7. When done, stop the services:
    ```bash
    docker-compose down
    ```
