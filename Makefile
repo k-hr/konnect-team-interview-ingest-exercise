@@ -15,8 +15,20 @@ build: config
 	go build -o bin/producer cmd/producer/main.go
 	go build -o bin/consumer cmd/consumer/main.go
 
+# Check dependencies
+check-deps:
+	@echo "Checking dependencies..."
+	@if ! command -v yq >/dev/null 2>&1; then \
+		echo "Error: yq is required but not installed."; \
+		echo "Install instructions:"; \
+		echo "  - macOS: brew install yq"; \
+		echo "  - Linux: visit https://github.com/mikefarah/yq#install"; \
+		exit 1; \
+	fi
+	@echo "All dependencies are installed."
+
 # Initialize project
-init: deps config
+init: check-deps deps config
 
 # Test target
 test:
@@ -47,8 +59,7 @@ deps:
 	go mod tidy
 
 # Kafka setup
-setup-kafka: config
-	@command -v yq >/dev/null 2>&1 || { echo "yq is required but not installed. Install with: brew install yq"; exit 1; }
+setup-kafka: check-deps config
 	@docker ps | grep -q konnect-team-interview-ingest-exercise-kafka-1 || { echo "Kafka container not running. Please start with: docker-compose up -d"; exit 1; }
 	@chmod +x scripts/setup_kafka.sh
 	./scripts/setup_kafka.sh

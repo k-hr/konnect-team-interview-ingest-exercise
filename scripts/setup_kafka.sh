@@ -9,7 +9,7 @@ fi
 # Extract values using yq (assumes yq is installed)
 TOPIC=$(yq eval '.kafka.topic' application.yml)
 PARTITIONS=$(yq eval '.kafka.topic_config.partitions' application.yml)
-REPLICATION_FACTOR=3
+REPLICATION_FACTOR=$(yq eval '.kafka.topic_config.replication_factor' application.yml)
 # Get broker from config but use internal Docker network address
 BOOTSTRAP_SERVER="kafka:29092"
 

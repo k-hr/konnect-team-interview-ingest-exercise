@@ -13,6 +13,14 @@ Below are the tasks we want you to complete.
 * develop a program that persists the data from Kafka into Opensearch
 
 
+## Prerequisites
+
+1. Docker and Docker Compose
+2. Go 1.21 or later
+3. `yq` command-line tool (required for Kafka setup)
+   - On macOS: `brew install yq`
+   - On Linux: Follow instructions at https://github.com/mikefarah/yq#install
+
 ## Get started
 
 Run 
